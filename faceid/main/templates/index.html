@@ -11,7 +11,9 @@
 <body>
     <div class="container" id="container">
         <div class="form-container sign-in-container">
-            <form action="/recognition?type=enter">
+            <form action="/recognition" method="post">
+                {% csrf_token %}
+                <input name="type" hidden value="in">
                 <h1>GİRİŞİN QEYDİYYATI</h1>
                 
                 <p><button id="enter">GİRİŞ</button></p>
@@ -20,7 +22,9 @@
         <div class="overlay-container">
             <div class="overlay">
                 <div class="overlay-panel overlay-right">
-                    <form action="/recognition?type=exit">
+                    <form action="/recognition" method="post">
+                        {% csrf_token %}
+                        <input name="type" hidden value="out">
                         <h1>ÇIXIŞIN QEYDİYYATI</h1>
                         <p><button class="ghost" id="exit">ÇIXIŞ</button></p>
                     </form>
