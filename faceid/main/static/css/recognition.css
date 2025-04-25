@@ -100,7 +100,7 @@ video {
   border-color: rgba(255, 255, 255, 0);
   font-size: 60px;
   color: #042B8C;
-  margin-left: 45%;
+  margin-left: 50%;
 }
 .snapshot :hover{
   color:#2f59c2;
@@ -113,4 +113,50 @@ video {
 }
 .snapshot :active {
   color: #042B8C;
+}
+
+#countdown {
+  position: absolute;
+  display: initial;
+  margin-left: 40%;
+  margin-top: 6px;
+  font-weight: bold;
+  font-size: 30px;
+  color: #042B8C;
+}
+
+.back {
+  position: absolute;
+  display: initial;
+  margin-left: 40%;
+  margin-top: 10px;
+  border: 0;
+  width: 10px;
+  height: auto;
+  background-color: rgba(255, 255, 255, 0);
+}
+.back svg :hover{
+  color:#2f59c2;
+}
+.back svg :focus{
+  color:aqua;
+}
+.back svg :visited{
+  color: #042B8C;
+}
+.back svg :active {
+  color: #042B8C;
+}
+
+.blink_timeout {
+  animation: blinker 1s linear infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
+#canvas {
+  display: none;
 }
