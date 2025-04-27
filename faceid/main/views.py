@@ -1,3 +1,5 @@
+from importlib.metadata import requires
+from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
@@ -15,4 +17,12 @@ def recognition_page(r):
 
 @csrf_exempt
 def capture_service(r):
-    print(f'\n\n\n\n===================\n{r}\n---------------------\n\n\n\n')
+    if r.method == 'POST':
+        print('POSTed')
+        data = json.loads(r.body)
+        b64_img = data.get('b64img')
+        ip_addr = data.get('ip')
+        print(f'\n\n\n\n===================\n{data}\n---------------------\n\n\n\n')
+        return JsonResponse({'received': True, 'key1': b64_img, 'key2': ip_addr})
+    else:
+        return None
