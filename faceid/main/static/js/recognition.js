@@ -2,9 +2,9 @@
 function back_page(){
     window.location.href="/"
 }
-
+var seconds = 0;
 function countdown() {
-    var seconds = 29;
+    seconds = 29;
     function tick() {
       var counter = document.getElementById("countdown");
       seconds--;
