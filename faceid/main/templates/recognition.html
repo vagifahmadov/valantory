@@ -9,10 +9,12 @@
 </head>
 <link rel="stylesheet" href="{% static 'css/recognition.css' %}">
 <script src="{% static 'js/jquery.min.js' %}"></script>
-<!-- swift alert -->
+<!-- swift alert start -->
 <script src="{% static 'js/sweetalert2.all.min.js' %}"></script>
 <link rel="stylesheet" href="{% static 'css/sweetalert2.min.css' %}">
-<!-- bootstrap -->
+<!-- sfift alert end -->
+
+<!-- <link rel="stylesheet" href="{% static 'css/bootstrap/bootstrap.min.css' %}"> -->
 
 <link rel="shortcut icon" href="#">
 
@@ -126,7 +128,7 @@
                             if (result.isConfirmed) {
                                 back_page();
                             } else if(result.dismiss === Swal.DismissReason.cancel){
-                                console.log("canceled in ");
+                                console.log("canceled in");
                             }
                         });
                 }
@@ -156,28 +158,82 @@
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     console.log("Response:");
-                    // swiftalert
-                    Swal.fire({
-                        title: "Məmmədqulu",
-                        text: "Əgər şəkildəki sizsinizsə təsdiqləyin.",
-                        icon: "warning",
-                        showCancelButton: true,
-                        confirmButtonColor: "#3085d6",
-                        cancelButtonColor: "#d33",
-                        confirmButtonText: "Bəli bu mənəm",
-                        cancelButtonText: "Yenidən cəhd"
+                    // start alert swift double alert
+                    const swalWithBootstrapButtons = Swal.mixin({
+                        buttonsStyling: true
+                        });
+                        swalWithBootstrapButtons.fire({
+                            // customClass: {
+                            //     confirmButton: "btn btn-success",
+                            //     cancelButton: "btn btn-danger"
+                            // },
+                            title: "Məmmədqulu",
+                            text: "Əgər şəkildəki sizsinizsə təsdiqləyin.",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonText: "Bəli bu mənəm",
+                            cancelButtonText: "Yenidən cəhd",
+                            customClass: {
+                                // actions: 'btn btn-primary',
+                                cancelButton: 'btn btn-danger',
+                                confirmButton: 'btn btn-success',
+                                denyButton: 'btn btn-danger',
+                                closeButton: 'btn btn-primary'
+                            },
+                            reverseButtons: true
                         }).then((result) => {
-                            if (result.isConfirmed) {
-                                stopStream(video.srcObject);
-                                back_page();
-                                Swal.fire({
-                                title: "Təsdiq edildi",
-                                text: "Your file has been deleted.",
+                        if (result.isConfirmed) {
+                            swalWithBootstrapButtons.fire({
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                },
+                                title: "Təsdiq edildi!",
+                                text: "Girisiniz cixisiniz qeyde alindi",
                                 icon: "success"
-                                });
-                            }
+                            }).then(()=>{
+                                back_page();
+                            });
+                        } else if (
+                            /* Read more about handling dismissals below */
+                            result.dismiss === Swal.DismissReason.cancel
+                        )
+                        {
+                            swalWithBootstrapButtons.fire({
+                                customClass: {
+                                    confirmButton: 'btn btn-primary'
+                                },
+                                title: "Yeniden cehd etmek isteyirsiniz?",
+                                text: "Diger yolla qeydiyyati yoxlayin.",
+                                icon: "error"
+                            });
+                        }
                         }
                     );
+                    // end alert swift double alert
+                    
+                    // swiftalert
+                    // Swal.fire({
+                    //     title: "",
+                    //     text: "",
+                    //     icon: "warning",
+                    //     showCancelButton: true,
+                    //     confirmButtonColor: "#3085d6",
+                    //     cancelButtonColor: "#d33",
+                    //     confirmButtonText: "Bəli bu mənəm",
+                    //     cancelButtonText: "Yenidən cəhd"
+                    //     }).then((result) => {
+                    //         if (result.isConfirmed) {
+                    //             stopStream(video.srcObject);
+                    //             back_page();
+                    //             Swal.fire({
+                    //             title: "Təsdiq edildi",
+                    //             text: "Your file has been deleted.",
+                    //             icon: "success"
+                    //             });
+                    //         }
+                    //     }
+                    // );
+                    // end swift
                 }
                 video;
             };
