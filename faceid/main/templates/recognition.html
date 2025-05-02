@@ -19,6 +19,12 @@
 <link rel="shortcut icon" href="#">
 
 <body>
+    <!-- progress -->
+    <div class="progress_ex">
+        <div class="loader"></div>
+    </div>
+    <div class="bg_progress"></div>
+    <!-- progress -->
     <section>
         <div class="wave">
           <span></span>
@@ -154,7 +160,20 @@
             xhr.open("POST", "/capture", true);
             xhr.setRequestHeader("Content-Type", "application/json");
             xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken")); // For Django CSRF protection
-            
+            xhr.onload = function () {
+                console.log("Loading...");
+                // sweet alert
+                // Swal.fire({
+                //     title: "هل تريد الاستمرار؟",
+                //     icon: "question",
+                //     iconHtml: "؟",
+                //     confirmButtonText: "نعم",
+                //     cancelButtonText: "لا",
+                //     showCancelButton: true,
+                //     showCloseButton: true
+                // });
+                // sweet alert
+            };
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     console.log("Response:");
@@ -171,14 +190,14 @@
                             text: "Əgər şəkildəki sizsinizsə təsdiqləyin.",
                             icon: "warning",
                             showCancelButton: true,
+                            showDenyButton: true,
                             confirmButtonText: "Bəli bu mənəm",
                             cancelButtonText: "Yenidən cəhd",
+                            denyButtonText: "FIN ilə qeydiyyat",
                             customClass: {
-                                // actions: 'btn btn-primary',
                                 cancelButton: 'btn btn-danger',
                                 confirmButton: 'btn btn-success',
-                                denyButton: 'btn btn-danger',
-                                closeButton: 'btn btn-primary'
+                                denyButton: 'btn btn-primary'
                             },
                             reverseButtons: true
                         }).then((result) => {
@@ -195,45 +214,33 @@
                             });
                         } else if (
                             /* Read more about handling dismissals below */
-                            result.dismiss === Swal.DismissReason.cancel
+                            result.dismiss === Swal.DismissReason.deny
                         )
                         {
                             swalWithBootstrapButtons.fire({
-                                customClass: {
-                                    confirmButton: 'btn btn-primary'
-                                },
-                                title: "Yeniden cehd etmek isteyirsiniz?",
-                                text: "Diger yolla qeydiyyati yoxlayin.",
-                                icon: "error"
+                                confirmButtonText: "Təsdiq et",
+                                    customClass: {
+                                        confirmButton: 'btn btn-primary',
+                                    },
+                                    title: "FİN ilə qeydiyyat",
+                                    text: "FİN-i daxil edin.",
+                                    icon: "question"
+                                }).then(()=>{
+                                    swalWithBootstrapButtons.fire({
+                                    customClass: {
+                                        confirmButton: 'btn btn-primary'
+                                    },
+                                    title: "Təsdiq edildi!",
+                                    text: "Girisiniz cixisiniz qeyde alindi",
+                                    icon: "success"
+                                }).then(()=>{
+                                    back_page();
+                                });
                             });
                         }
                         }
                     );
-                    // end alert swift double alert
                     
-                    // swiftalert
-                    // Swal.fire({
-                    //     title: "",
-                    //     text: "",
-                    //     icon: "warning",
-                    //     showCancelButton: true,
-                    //     confirmButtonColor: "#3085d6",
-                    //     cancelButtonColor: "#d33",
-                    //     confirmButtonText: "Bəli bu mənəm",
-                    //     cancelButtonText: "Yenidən cəhd"
-                    //     }).then((result) => {
-                    //         if (result.isConfirmed) {
-                    //             stopStream(video.srcObject);
-                    //             back_page();
-                    //             Swal.fire({
-                    //             title: "Təsdiq edildi",
-                    //             text: "Your file has been deleted.",
-                    //             icon: "success"
-                    //             });
-                    //         }
-                    //     }
-                    // );
-                    // end swift
                 }
                 video;
             };
