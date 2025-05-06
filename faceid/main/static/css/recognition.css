@@ -97,6 +97,9 @@ video {
   margin-left: -40px;
   /* opacity: 1.5; */
 }
+#pin_video{
+  transform: rotate(+3deg);
+}
 .snapshot {
   background-color:rgba(255, 255, 255, 0);
   border-color: rgba(255, 255, 255, 0);
