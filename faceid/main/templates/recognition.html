@@ -254,6 +254,8 @@
                                 text: "FİN-i daxil edin.",
                                 width: "800px",
                                 inputLabel: "input",
+                                allowOutsideClick: false,
+                                allowEscapeKey: false,
                                 // height: "700px",
                                 // icon: "question",
                                 html: `<div class="content" id="pin_video">
@@ -267,7 +269,6 @@
                                             </center>
                                         </div>`
                             }).then(()=>{
-                                console.log(result);
                                 if (result.isDenied){
                                     swalWithBootstrapButtons.fire({
                                         customClass: {
@@ -289,7 +290,6 @@
                                 }
                             });
                             var video_pin = document.querySelector("#videoPin");
-                            console.log("video log => "+navigator.mediaDevices.getUserMedia);
                             startStream(stream_g, video_pin);
                         }else if(result){
                             // if tryed again
