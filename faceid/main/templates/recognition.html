@@ -247,13 +247,24 @@
                             swalWithBootstrapButtons.fire({
                                 showConfirmButton: true,
                                 confirmButtonText: "Təsdiq et",
+                                showCancelButton: true,
+                                cancelButtonText: "Bağla",
                                 customClass: {
                                     confirmButton: 'btn btn-primary',
                                 },
                                 title: "FİN ilə qeydiyyat",
                                 text: "FİN-i daxil edin.",
                                 width: "800px",
-                                inputLabel: "input",
+                                input: "text",
+                                inputAttributes: {
+                                    autocapitalize: "off",
+                                },
+                                inputValidator: (value) => {
+                                    if (!value || value.length < 7) {
+                                        return "FİN-i daxil edin (7 simvoldur).";
+                                    }
+                                },
+                                inputPlaceholder: "FİN kod",
                                 allowOutsideClick: false,
                                 allowEscapeKey: false,
                                 // height: "700px",
@@ -269,7 +280,8 @@
                                             </center>
                                         </div>`
                             }).then(()=>{
-                                if (result.isDenied){
+                                console.log(Swal.DismissReason);
+                                if (result.isConfirmed){
                                     swalWithBootstrapButtons.fire({
                                         customClass: {
                                             confirmButton: 'btn btn-primary'
@@ -282,8 +294,8 @@
                                         $(".progress_ex").hide();
                                         back_page();
                                     });
-                                }else{
-                                    // if clicked away
+                                }else if (result.dismiss === Swal.DismissReason.cancel){
+                                    // if clicked close
                                     console.log("away!!");
                                     $(".bg_progress").hide();
                                     $(".progress_ex").hide();
