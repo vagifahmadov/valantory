@@ -243,4 +243,10 @@ video {
   background-color: rgba(0, 0, 0, 0.5);
   position: absolute;
 }
+.swal2-input{
+  width: 120px !important;
+  margin-left: 43%;
+  text-align: center;
+  text-transform: uppercase;
+}
 /* progress bar */
