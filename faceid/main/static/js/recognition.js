@@ -21,7 +21,7 @@ function countdown() {
         // console.log(`time is:`+seconds);
       } else {
         document.getElementById("countdown").innerHTML = "0:00";
-        // back_page();
+        back_page();
       }
     }
     tick();

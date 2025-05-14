@@ -38,6 +38,7 @@ def pin_service(r):
         data = json.loads(r.body)
         b64_img = data.get('b64img')
         pin = data.get('pin')
+        print(data)
         return JsonResponse({'received': True, 'key1': b64_img, 'key2': pin})
     else:
         return None

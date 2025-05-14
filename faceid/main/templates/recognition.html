@@ -201,7 +201,7 @@
             xhr.onreadystatechange = function () {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     // check PIN
-                    swalWithBootstrapButtons.fire({
+                    Swal.fire({
                         customClass: {
                             confirmButton: 'btn btn-primary'
                         },
@@ -338,6 +338,7 @@
                                 if(result.isConfirmed){
                                     // checkif submited
                                     var pin = $("#swal2-input").val();
+                                    console.log("OMG!! ur pin is: "+pin);
                                     send_img_pin(img, pin);
                                     // checkif submited
                                 }else if (result.isDismissed){
