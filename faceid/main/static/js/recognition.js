@@ -7,12 +7,13 @@ function countdown() {
   seconds = 29;
   tick();
 }
+var countTimeOut;
 function tick() {
   var counter = document.getElementById("countdown");
   seconds--;
   counter.innerHTML ="0:" + (seconds < 10 ? "0" : "") + String(seconds);
   if (seconds > 0) {
-    setTimeout(tick, 1000);
+    countTimeOut = setTimeout(tick, 1000);
     if (seconds < 10){
         counter.classList.add("blink_timeout");
         counter.style.color = '#ce4975';
@@ -106,8 +107,9 @@ function send_img_pin(img, pin){
   xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken")); // For Django CSRF protection
   xhr.onload = function () {
       console.log("Loading...");
-      $(".bg_progress").show();
-      $(".progress_ex").show();
+      // $(".bg_progress").show();
+      // $(".progress_ex").show();
+      loading_mode_on();
   };
   xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
@@ -120,8 +122,9 @@ function send_img_pin(img, pin){
               text: "Girisiniz cixisiniz FIN-le qeyde alindi",
               icon: "success"
           }).then(()=>{
-              $(".bg_progress").hide();
-              $(".progress_ex").hide();
+              // $(".bg_progress").hide();
+              // $(".progress_ex").hide();
+              loading_mode_off();
               back_page();
           });
           // check PIN
@@ -162,13 +165,15 @@ function capture_img(img){
   xhr.setRequestHeader("X-CSRFToken", getCookie("csrftoken")); // For Django CSRF protection
   xhr.onload = function () {
       console.log("Loading...");
-      $(".bg_progress").show();
-      $(".progress_ex").show();
+      // $(".bg_progress").show();
+      // $(".progress_ex").show();
+      loading_mode_on();
   };
   xhr.onreadystatechange = function () {
       if (xhr.readyState === 4 && xhr.status === 200) {
-          $(".bg_progress").hide();
-          $(".progress_ex").hide();
+          // $(".bg_progress").hide();
+          // $(".progress_ex").hide();
+          loading_mode_off();
           // start alert swift double alert
           const swalWithBootstrapButtons = Swal.mixin({
               buttonsStyling: true
@@ -202,8 +207,9 @@ function capture_img(img){
                       text: "Girisiniz cixisiniz qeyde alindi",
                       icon: "success"
                   }).then(()=>{
-                      $(".bg_progress").hide();
-                      $(".progress_ex").hide();
+                      // $(".bg_progress").hide();
+                      // $(".progress_ex").hide();
+                      loading_mode_off();
                       back_page();
                   });
               } else if (result.dismiss === Swal.DismissReason.deny){
@@ -255,20 +261,24 @@ function capture_img(img){
                       }else if (result.isDismissed){
                           // if clicked close
                           console.log("away!!");
-                          $(".bg_progress").hide();
-                          $(".progress_ex").hide();
+                          // $(".bg_progress").hide();
+                          // $(".progress_ex").hide();
+                          loading_mode_off();
                           startStream(stream_g, video);
                           seconds=29
+                          countdown();
                       }
                   });
                   var video_pin = document.querySelector("#videoPin");
                   startStream(stream_g, video_pin);
               }else if(result){
                   // if tryed again
-                  $(".bg_progress").hide();
-                  $(".progress_ex").hide();
+                  // $(".bg_progress").hide();
+                  // $(".progress_ex").hide();
+                  loading_mode_off();
                   // console.log("remaning secound:"+seconds);
                   seconds = 29;
+                  countdown();
                   // console.log("remaning secound:"+seconds);
               }
               }
@@ -285,13 +295,24 @@ function capture_img(img){
   xhr.send(data);
 };
 
+function stopCountdown() {
+  clearTimeout(countTimeOut);
+  console.log("Countdown stopped.");
+}
+
+
 function loading_mode_off(){
   $(".bg_progress").hide();
   $(".progress_ex").hide();
-  seconds = 0;
+  $("#countdown").show();
+  // countdown();
+  console.log("loading mode OFF");
 }
 
 function loading_mode_on(){
   $(".bg_progress").show();
   $(".progress_ex").show();
+  $("#countdown").hide();
+  stopCountdown();
+  console.log("loading mode ON");
 }
