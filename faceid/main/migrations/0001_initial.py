@@ -21,7 +21,6 @@ class Migration(migrations.Migration):
                 ('pin', models.CharField(max_length=50)),
                 ('id_im', models.IntegerField()),
                 ('image', models.CharField(max_length=50)),
-                ('base64', models.CharField(max_length=50)),
-            ],
+                ('base64', models.CharField(max_length=50))],
         ),
     ]
